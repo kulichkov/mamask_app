@@ -155,7 +155,6 @@ class TapatalkAPI {
      This set of API supports traditional inbox/sent items messaging with multiple folders support.
      
      report_pm
-     get_box_info
      get_box
      get_message
      get_quote_pm
@@ -164,15 +163,6 @@ class TapatalkAPI {
      mark_pm_read
 
      */
-
-/*
-    user_name	Array of byte[]	yes	To support sending message to multiple recipients, the app constructs an array and insert user_name for each recipient as an element inside the array.	3
-     subject	byte[]	yes		3
-     text_body	byte[]	yes		3
-     action	Int		1 = REPLY to a message; 2 = FORWARD to a message. If this field is presented, the pm_id below also need to be provided.	3
-     pm_id	String		It is used in conjunction with "action" parameter to indicate which PM is being replied or forwarded to.	3
-
- */
 
     func create_message(user_name: [String], subject: String?, text_body: String?, action: Int?, pm_id: String?, handler: @escaping tptlkHandler) {
         let encodedUserName = user_name.map{utf8EncodeFromString($0)}
@@ -194,6 +184,17 @@ class TapatalkAPI {
         return sendURLRequestWithMethod("get_box_info", andParameters: nil, andHandler: handler)
     }
 
+    //Returns a list of message subject and short content from a specific box.
+    func get_box(box_id: String, start_num: Int?, end_num: Int?, handler: @escaping tptlkHandler) {
+        var inputParameters: [Any] = [box_id]
+        if start_num != nil {
+            inputParameters.append(start_num!)
+        }
+        if end_num != nil {
+            inputParameters.append(end_num!)
+        }
+        return sendURLRequestWithMethod("get_box", andParameters: inputParameters, andHandler: handler)
+    }
 
 
 }
