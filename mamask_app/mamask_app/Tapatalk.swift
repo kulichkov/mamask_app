@@ -98,12 +98,30 @@ class TapatalkAPI {
     
     //MARK: - User
 
+    /*
+     
+     TODO: Разобраться с сохранением кукисов из http-заголовка ответа
+
+     Server returns cookies in HTTP header. 
+     Client should store the cookies and pass it back to server for all subsequence calls to maintain user session. 
+     ** DO NOT include HTTP Cookies in the request header **
+     
+
+     	byte[]	yes		3
+     password	byte[]	yes	The app should send the encrypted password to the server if there is instruction received from get_config. Otherwise send the plain-text password. For example most of the vBulletin systems requires md5 encryption by default, while SMF systems support SHA-1 encryption.	3
+     anonymous	Boolean		API Level 4 only. Allow user to login anonymously so the user does not appear in the Who's Online list. Useful for background login such as pulling unread PM etc.
+     */
+    func login(login_name: String, password: String, anonymous: Bool?, handler: @escaping tptlkHandler) {
+        let dataLogin = login_name.data(using: String.Encoding.utf8)
+        let dataPassword = password.data(using: String.Encoding.utf8)
+        return sendURLRequestWithMethod("login", andParameters: [dataLogin!, dataPassword!], andHandler: handler)
+    }
 
     /*
      USER SECTION
      
      avatar.php
-     login
+
      get_inbox_stat
      logout_user
      get_online_users
