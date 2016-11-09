@@ -156,7 +156,6 @@ class TapatalkAPI {
      
      report_pm
      get_box
-     get_message
      get_quote_pm
      delete_message
      mark_pm_unread
@@ -196,5 +195,10 @@ class TapatalkAPI {
         return sendURLRequestWithMethod("get_box", andParameters: inputParameters, andHandler: handler)
     }
 
+    //Returns content of private message given a box id and message id
+    func get_message(message_id: String, box_id: String, return_html: Bool = false, handler: @escaping tptlkHandler) {
+        let inputParameters: [Any] = [message_id, box_id, return_html]
+        return sendURLRequestWithMethod("get_message", andParameters: inputParameters, andHandler: handler)
+    }
 
 }
