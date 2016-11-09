@@ -17,6 +17,11 @@ class TapatalkAPI {
     private func utf8EncodeFromString(_ string: String?) -> Data? {
         return string?.data(using: String.Encoding.utf8)
     }
+
+    init(url: URL) {
+        mobiquoURL = url
+    }
+
     //MARK: - Requesting
     private func sendURLRequestWithMethod(_ methodName: String, andParameters parameters: [Any]?, andHandler handler: @escaping tptlkHandler) {
         let urlRequest = NSMutableURLRequest(url: mobiquoURL!)
