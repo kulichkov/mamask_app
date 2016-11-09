@@ -52,6 +52,13 @@ class TapatalkAPI {
     //MARK: - Forum
     typealias tptlkHandler = ([String: Any]) -> Void
 
+    /*
+     This function is always the first function to invoke when the app attempts to enter a specific forum. 
+     It returns configuration name/value pair for this forum system. There are two kind of name/value pairs. 
+     One is those based on some of the forum system configuration, and one is a simple name/value pairs declared in the config.txt file, 
+     usually located in mobiquo/conf/config.txt. E.g. the "guest_okay" is based on the forum system configuration. 
+     while the "api_level" is mobiquo
+    */
     func get_config(handler: @escaping tptlkHandler) {
         return sendURLRequestWithMethod("get_config", andParameters: nil, andHandler: handler)
     }
