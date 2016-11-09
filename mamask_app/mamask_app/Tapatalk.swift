@@ -10,9 +10,13 @@ import Foundation
 import wpxmlrpc
 
 class TapatalkAPI {
-    //MARK: - Variables
+    //MARK: - Variables and utilities
+    typealias tptlkHandler = ([String: Any]) -> Void
     var mobiquoURL: URL?
 
+    private func utf8EncodeFromString(_ string: String?) -> Data? {
+        return string?.data(using: String.Encoding.utf8)
+    }
     //MARK: - Requesting
     private func sendURLRequestWithMethod(_ methodName: String, andParameters parameters: [Any]?, andHandler handler: @escaping tptlkHandler) {
         let urlRequest = NSMutableURLRequest(url: mobiquoURL!)
@@ -50,7 +54,6 @@ class TapatalkAPI {
     }
 
     //MARK: - Forum
-    typealias tptlkHandler = ([String: Any]) -> Void
 
     /*
      This function is always the first function to invoke when the app attempts to enter a specific forum. 
@@ -134,6 +137,45 @@ class TapatalkAPI {
      update_signature
      */
 
+    //MARK: - Private message
+    /*
+     This section provides necessary functions related to private messaging such ability to send/reply/delete/forward private messages. 
+     This set of API supports traditional inbox/sent items messaging with multiple folders support.
+     
+     report_pm
+     get_box_info
+     get_box
+     get_message
+     get_quote_pm
+     delete_message
+     mark_pm_unread
+     mark_pm_read
 
-    
+     */
+
+/*
+    user_name	Array of byte[]	yes	To support sending message to multiple recipients, the app constructs an array and insert user_name for each recipient as an element inside the array.	3
+     subject	byte[]	yes		3
+     text_body	byte[]	yes		3
+     action	Int		1 = REPLY to a message; 2 = FORWARD to a message. If this field is presented, the pm_id below also need to be provided.	3
+     pm_id	String		It is used in conjunction with "action" parameter to indicate which PM is being replied or forwarded to.	3
+
+ */
+
+    func create_message(user_name: [String], subject: String?, text_body: String?, action: Int?, pm_id: String?, handler: @escaping tptlkHandler) {
+        let encodedUserName = user_name.map{utf8EncodeFromString($0)}
+        let encodedSubject = utf8EncodeFromString(subject)
+        let encodedTextBody = utf8EncodeFromString(text_body)
+        var inputParameters: [Any] = [encodedUserName, encodedSubject ?? "", encodedTextBody ?? ""]
+        if action != nil {
+            inputParameters.append(action!)
+        }
+        if pm_id != nil {
+            inputParameters.append(pm_id!)
+        }
+        return sendURLRequestWithMethod("create_message", andParameters: inputParameters, andHandler: handler)
+    }
+
+
+
 }
