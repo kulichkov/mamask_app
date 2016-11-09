@@ -102,8 +102,8 @@ class TapatalkAPI {
     //MARK: - User
 
     /*
-     
-     TODO: Разобраться с сохранением кукисов из http-заголовка ответа
+
+     TODO: Разобраться в LOGIN с сохранением кукисов из http-заголовка ответа
 
      Server returns cookies in HTTP header. 
      Client should store the cookies and pass it back to server for all subsequence calls to maintain user session. 
@@ -172,6 +172,12 @@ class TapatalkAPI {
             inputParameters.append(pm_id!)
         }
         return sendURLRequestWithMethod("create_message", andParameters: inputParameters, andHandler: handler)
+    }
+
+    //Returns a list of message boxes and their information. 
+    //It allows the app to support multiple folders beyond Inbox and Sent box.
+    func get_box_info(handler: @escaping tptlkHandler) {
+        return sendURLRequestWithMethod("get_box_info", andParameters: nil, andHandler: handler)
     }
 
 
