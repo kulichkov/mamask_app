@@ -17,8 +17,8 @@ class TapatalkAPI {
 
     //MARK: - Forum
 
-    func get_config() -> [String: Any] {
-        return sendURLRequestWithMethod("get_config", andParameters: nil)
+    func get_config(handler: @escaping ([String: Any]) -> Void) {
+        return sendURLRequestWithMethod("get_config", andParameters: nil, andHandler: handler)
     }
 
     /*
@@ -35,8 +35,7 @@ class TapatalkAPI {
      */
 
 
-    private func sendURLRequestWithMethod(_ methodName: String, andParameters parameters: [Any]?) -> [String: Any] {
-        var outputParameters = [String: Any]()
+    private func sendURLRequestWithMethod(_ methodName: String, andParameters parameters: [Any]?, andHandler handler: @escaping ([String: Any]) -> Void) {
         let urlRequest = NSMutableURLRequest(url: mobiquoURL!)
         urlRequest.httpMethod = "POST"
         let encoder = WPXMLRPCEncoder(method: methodName, andParameters: parameters)
@@ -53,7 +52,7 @@ class TapatalkAPI {
             } else if let response = response, let decoder = WPXMLRPCDecoder(data: data) {
                 if !decoder.isFault() {
                     print("RESPONSE:\n\(response)")
-                    print("DATA_FROM_SERVER:\n\(decoder.object())\nEND DATA\n")
+                    print("RAW_DATA_FROM_SERVER:\n\(decoder.object())\nEND DATA\n")
                     if var theDictionary = decoder.object() as? Dictionary<String, Any> {
                         for (key, value) in theDictionary {
                             if let data = value as? Data {
@@ -62,16 +61,13 @@ class TapatalkAPI {
                                 }
                             }
                         }
-                        outputParameters = theDictionary
+                        handler(theDictionary)
                     }
                 } else {
                     print("Response in decoder contains a XML-RPC error")
                 }
             }
         }).resume()
-
-        return outputParameters
-        
     }
     
     
