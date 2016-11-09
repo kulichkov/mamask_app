@@ -10,33 +10,10 @@ import Foundation
 import wpxmlrpc
 
 class TapatalkAPI {
-    //MARK: - Constants
-
     //MARK: - Variables
     var mobiquoURL: URL?
 
-    //MARK: - Forum
-    typealias tptlkHandler = ([String: Any]) -> Void
-
-    func get_config(handler: @escaping tptlkHandler) {
-        return sendURLRequestWithMethod("get_config", andParameters: nil, andHandler: handler)
-    }
-    
-
-    /*
-     FORUM SECTION
-
-     get_forum
-     get_participated_forum
-     mark_all_as_read
-     login_forum
-     get_id_by_url
-     get_board_stat
-     get_forum_status
-     get_smilies
-     */
-
-
+    //MARK: - Requesting
     private func sendURLRequestWithMethod(_ methodName: String, andParameters parameters: [Any]?, andHandler handler: @escaping tptlkHandler) {
         let urlRequest = NSMutableURLRequest(url: mobiquoURL!)
         urlRequest.httpMethod = "POST"
@@ -71,7 +48,45 @@ class TapatalkAPI {
             }
         }).resume()
     }
-    
+
+    //MARK: - Forum
+    typealias tptlkHandler = ([String: Any]) -> Void
+
+    func get_config(handler: @escaping tptlkHandler) {
+        return sendURLRequestWithMethod("get_config", andParameters: nil, andHandler: handler)
+    }
+
+    func get_forum(handler: @escaping tptlkHandler) {
+
+    }
+
+    func get_participated_forum(handler: @escaping tptlkHandler) {
+
+    }
+
+    func mark_all_as_read(handler: @escaping tptlkHandler) {
+
+    }
+
+    func login_forum(handler: @escaping tptlkHandler) {
+
+    }
+
+    func get_id_by_url(handler: @escaping tptlkHandler) {
+
+    }
+
+    func get_board_stat(handler: @escaping tptlkHandler) {
+
+    }
+
+    func get_forum_status(handler: @escaping tptlkHandler) {
+
+    }
+
+    func get_smilies(handler: @escaping tptlkHandler) {
+
+    }
     
     
     //MARK: - User
@@ -93,5 +108,7 @@ class TapatalkAPI {
      ignore_user
      update_signature
      */
+
+
     
 }
