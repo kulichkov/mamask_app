@@ -16,10 +16,12 @@ class TapatalkAPI {
     var mobiquoURL: URL?
 
     //MARK: - Forum
+    typealias tptlkHandler = ([String: Any]) -> Void
 
-    func get_config(handler: @escaping ([String: Any]) -> Void) {
+    func get_config(handler: @escaping tptlkHandler) {
         return sendURLRequestWithMethod("get_config", andParameters: nil, andHandler: handler)
     }
+    
 
     /*
      FORUM SECTION
@@ -35,7 +37,7 @@ class TapatalkAPI {
      */
 
 
-    private func sendURLRequestWithMethod(_ methodName: String, andParameters parameters: [Any]?, andHandler handler: @escaping ([String: Any]) -> Void) {
+    private func sendURLRequestWithMethod(_ methodName: String, andParameters parameters: [Any]?, andHandler handler: @escaping tptlkHandler) {
         let urlRequest = NSMutableURLRequest(url: mobiquoURL!)
         urlRequest.httpMethod = "POST"
         let encoder = WPXMLRPCEncoder(method: methodName, andParameters: parameters)
