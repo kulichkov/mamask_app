@@ -115,9 +115,7 @@ class TapatalkAPI {
      anonymous	Boolean		API Level 4 only. Allow user to login anonymously so the user does not appear in the Who's Online list. Useful for background login such as pulling unread PM etc.
      */
     func login(login_name: String, password: String, anonymous: Bool?, handler: @escaping tptlkHandler) {
-        let dataLogin = login_name.data(using: String.Encoding.utf8)
-        let dataPassword = password.data(using: String.Encoding.utf8)
-        return sendURLRequestWithMethod("login", andParameters: [dataLogin!, dataPassword!], andHandler: handler)
+        return sendURLRequestWithMethod("login", andParameters: [utf8EncodeFromString(login_name)!, utf8EncodeFromString(password)!], andHandler: handler)
     }
 
     /*
