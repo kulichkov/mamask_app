@@ -14,12 +14,27 @@ class TapatalkAPI {
     typealias tptlkHandler = ([String: Any]) -> Void
     var mobiquoURL: URL?
 
+    init(url: URL) {
+        mobiquoURL = url
+    }
     private func utf8EncodeFromString(_ string: String?) -> Data? {
         return string?.data(using: String.Encoding.utf8)
     }
 
-    init(url: URL) {
-        mobiquoURL = url
+    private func utf8Decode(_ value: Any) -> Any {
+        if let data = value as? Data {
+            if let newValue = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as? String {
+                return newValue
+            }
+        } else if var dictionary = value as? [String: Any] {
+            dictionary.forEach({ (key, valueForKey) in
+                dictionary.updateValue(utf8Decode(valueForKey), forKey: key)
+            })
+            return dictionary
+        } else if let array = value as? [Any] {
+            return array.map { utf8Decode($0) }
+        }
+        return value
     }
 
     //MARK: - Requesting
@@ -37,19 +52,13 @@ class TapatalkAPI {
         sessionWithoutADelegate.dataTask(with: request, completionHandler: { (data, response, error) in
             if let error = error {
                 print("Error in sessionWithoutADelegate.dataTask: \(error)")
-            } else if let response = response, let decoder = WPXMLRPCDecoder(data: data) {
+            } else if let _ = response, let decoder = WPXMLRPCDecoder(data: data) {
+                //FIXME: Разобраться с response: нужен он нам или нет
                 if !decoder.isFault() {
-                    print("RESPONSE:\n\(response)")
-                    print("RAW_DATA_FROM_SERVER:\n\(decoder.object())\nEND DATA\n")
-                    if var theDictionary = decoder.object() as? Dictionary<String, Any> {
-                        for (key, value) in theDictionary {
-                            if let data = value as? Data {
-                                if let newValue = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as? String {
-                                    theDictionary.updateValue(newValue, forKey: key)
-                                }
-                            }
-                        }
-                        handler(theDictionary)
+                    //print("RESPONSE:\n\(response)")
+                    //print("RAW_DATA_FROM_SERVER:\n\(decoder.object())\nEND DATA\n")
+                    if let theDictionary = decoder.object() as? [String: Any] {
+                        handler(self.utf8Decode(theDictionary) as! [String: Any])
                     }
                 } else {
                     print("Response in decoder contains a XML-RPC error")
@@ -108,7 +117,6 @@ class TapatalkAPI {
 
     /*
 
-     TODO: Разобраться в LOGIN с сохранением кукисов из http-заголовка ответа
 
      Server returns cookies in HTTP header. 
      Client should store the cookies and pass it back to server for all subsequence calls to maintain user session. 
@@ -120,6 +128,7 @@ class TapatalkAPI {
      anonymous	Boolean		API Level 4 only. Allow user to login anonymously so the user does not appear in the Who's Online list. Useful for background login such as pulling unread PM etc.
      */
     func login(login_name: String, password: String, anonymous: Bool?, handler: @escaping tptlkHandler) {
+        //TODO: Разобраться в LOGIN с сохранением кукисов из http-заголовка ответа
         return sendURLRequestWithMethod("login", andParameters: [utf8EncodeFromString(login_name)!, utf8EncodeFromString(password)!], andHandler: handler)
     }
 
