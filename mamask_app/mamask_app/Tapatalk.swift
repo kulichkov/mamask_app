@@ -127,7 +127,7 @@ class TapatalkAPI {
      password	byte[]	yes	The app should send the encrypted password to the server if there is instruction received from get_config. Otherwise send the plain-text password. For example most of the vBulletin systems requires md5 encryption by default, while SMF systems support SHA-1 encryption.	3
      anonymous	Boolean		API Level 4 only. Allow user to login anonymously so the user does not appear in the Who's Online list. Useful for background login such as pulling unread PM etc.
      */
-    func login(login_name: String, password: String, anonymous: Bool?, handler: @escaping tptlkHandler) {
+    func login(login_name: String, password: String, anonymous: Bool? = nil, handler: @escaping tptlkHandler) {
         //TODO: Разобраться в LOGIN с сохранением кукисов из http-заголовка ответа
         return sendURLRequestWithMethod("login", andParameters: [utf8EncodeFromString(login_name)!, utf8EncodeFromString(password)!], andHandler: handler)
     }
