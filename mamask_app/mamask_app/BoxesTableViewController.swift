@@ -8,11 +8,35 @@
 
 import UIKit
 
+/*
+ ["message_room_count": 360, "list": [["unread_count": 0, "box_id": inbox, "box_type": INBOX, "box_name": "Входящие", "msg_count": 0], ["unread_count": 0, "box_id": sent, "box_type": SENT, "box_name": "Отправленные", "msg_count": 5]]]
+ */
+struct Box {
+    var unreadCount: Int = 0
+    var boxID: String = ""
+    var boxType: String = ""
+    var boxName: String = ""
+    var msgCount: Int = 0
+}
+
+fileprivate struct Constants {
+    static let boxCellReuseIdentifier = "Box Cell"
+}
+
 class BoxesTableViewController: UITableViewController {
+
+    var messageRoomCount: Int = 0
+    var boxes = [Box]() {
+        didSet {
+            tableView.reloadData()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        print("messageRoomCount = \(messageRoomCount)")
+        print("boxes = \(boxes)")
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -28,18 +52,16 @@ class BoxesTableViewController: UITableViewController {
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return boxes.count
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.boxCellReuseIdentifier, for: indexPath)
+        cell.textLabel?.text = boxes[indexPath.row].boxName
+        cell.detailTextLabel?.text = "сообщений: \(boxes[indexPath.row].msgCount), непрочитанных: \(boxes[indexPath.row].unreadCount)"
         return cell
     }
-    */
+
 
     /*
     // Override to support conditional editing of the table view.

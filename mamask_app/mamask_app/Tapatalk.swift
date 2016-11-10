@@ -53,7 +53,7 @@ class TapatalkAPI {
             if let error = error {
                 print("Error in sessionWithoutADelegate.dataTask: \(error)")
             } else if let _ = response, let decoder = WPXMLRPCDecoder(data: data) {
-                //FIXME: Разобраться с response: нужен он нам или нет
+                //TODO: Разобраться с response: нужен он нам или нет
                 if !decoder.isFault() {
                     print("RESPONSE:\n\(response)\nEND_RESPONSE")
                     //print("RAW_DATA_FROM_SERVER:\n\(decoder.object())\nEND DATA\n")
