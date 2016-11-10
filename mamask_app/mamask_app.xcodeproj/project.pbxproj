@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		4596A8DF2EF7B4A21FD8B260 /* Pods_mamask_app.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCBE0CCDE9BB55034E68B4D /* Pods_mamask_app.framework */; };
 		6939F92B1DCBC92A00B20914 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6939F92A1DCBC92A00B20914 /* AppDelegate.swift */; };
-		6939F92D1DCBC92A00B20914 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6939F92C1DCBC92A00B20914 /* ViewController.swift */; };
 		6939F9301DCBC92A00B20914 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6939F92E1DCBC92A00B20914 /* Main.storyboard */; };
 		6939F9321DCBC92A00B20914 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6939F9311DCBC92A00B20914 /* Assets.xcassets */; };
 		6939F9351DCBC92A00B20914 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6939F9331DCBC92A00B20914 /* LaunchScreen.storyboard */; };
@@ -21,7 +20,6 @@
 		09C95BE8F22610A1AF918D6A /* Pods-mamask_app.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mamask_app.release.xcconfig"; path = "Pods/Target Support Files/Pods-mamask_app/Pods-mamask_app.release.xcconfig"; sourceTree = "<group>"; };
 		6939F9271DCBC92A00B20914 /* mamask_app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mamask_app.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6939F92A1DCBC92A00B20914 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		6939F92C1DCBC92A00B20914 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		6939F92F1DCBC92A00B20914 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6939F9311DCBC92A00B20914 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6939F9341DCBC92A00B20914 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -74,7 +72,6 @@
 			isa = PBXGroup;
 			children = (
 				6939F92A1DCBC92A00B20914 /* AppDelegate.swift */,
-				6939F92C1DCBC92A00B20914 /* ViewController.swift */,
 				6939F93C1DCBD0BD00B20914 /* Tapatalk.swift */,
 				6939F92E1DCBC92A00B20914 /* Main.storyboard */,
 				69C19A071DD45EC30030D8C0 /* LoginViewController.swift */,
@@ -219,7 +216,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				69C19A081DD45EC30030D8C0 /* LoginViewController.swift in Sources */,
-				6939F92D1DCBC92A00B20914 /* ViewController.swift in Sources */,
 				6939F92B1DCBC92A00B20914 /* AppDelegate.swift in Sources */,
 				6939F93D1DCBD0BD00B20914 /* Tapatalk.swift in Sources */,
 			);
