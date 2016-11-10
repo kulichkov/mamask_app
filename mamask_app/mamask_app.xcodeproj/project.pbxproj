@@ -71,15 +71,23 @@
 		6939F9291DCBC92A00B20914 /* mamask_app */ = {
 			isa = PBXGroup;
 			children = (
-				6939F92A1DCBC92A00B20914 /* AppDelegate.swift */,
+				69C19A091DD47B540030D8C0 /* Supporting Files */,
 				6939F93C1DCBD0BD00B20914 /* Tapatalk.swift */,
 				6939F92E1DCBC92A00B20914 /* Main.storyboard */,
 				69C19A071DD45EC30030D8C0 /* LoginViewController.swift */,
+			);
+			path = mamask_app;
+			sourceTree = "<group>";
+		};
+		69C19A091DD47B540030D8C0 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				6939F92A1DCBC92A00B20914 /* AppDelegate.swift */,
 				6939F9311DCBC92A00B20914 /* Assets.xcassets */,
 				6939F9331DCBC92A00B20914 /* LaunchScreen.storyboard */,
 				6939F9361DCBC92A00B20914 /* Info.plist */,
 			);
-			path = mamask_app;
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		B96D406CA2B01FF0B1670F1A /* Pods */ = {
