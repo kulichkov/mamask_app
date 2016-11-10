@@ -8,9 +8,6 @@
 
 import UIKit
 
-/*
- ["message_room_count": 360, "list": [["unread_count": 0, "box_id": inbox, "box_type": INBOX, "box_name": "Входящие", "msg_count": 0], ["unread_count": 0, "box_id": sent, "box_type": SENT, "box_name": "Отправленные", "msg_count": 5]]]
- */
 struct Box {
     var unreadCount: Int = 0
     var boxID: String = ""
@@ -25,23 +22,66 @@ fileprivate struct Constants {
 
 class BoxesTableViewController: UITableViewController {
 
-    var messageRoomCount: Int = 0
-    var boxes = [Box]() {
+    var tapatalk: TapatalkAPI? {
         didSet {
-            tableView.reloadData()
+            getBoxInfo()
+        }
+    }
+    private var messageRoomCount: Int = 0
+    private var boxes = [Box]()
+
+
+    private func getBoxInfo() {
+        DispatchQueue.global(qos: DispatchQoS.QoSClass.userInitiated).async { [weak weakSelf = self] in
+            print("Starting tapatalk.get_box_info()...")
+            weakSelf?.tapatalk?.get_box_info() { getBoxResult in
+                DispatchQueue.main.async {
+                    print("Starting handler in get_box_info...")
+                    if let messageRoomCount = getBoxResult["message_room_count"] as? Int {
+                        weakSelf?.messageRoomCount = messageRoomCount
+                    }
+                    if let boxes = getBoxResult["list"] as? [[String: Any?]] {
+                        weakSelf?.boxes = [Box]()
+                        boxes.forEach({ (box) in
+                            var newBox = Box()
+                            if let unreadCount = box["unread_count"] as? Int {
+                                newBox.unreadCount = unreadCount
+                            }
+                            if let boxID = box["box_id"] as? String {
+                                newBox.boxID = boxID
+                            }
+                            if let boxType = box["box_type"] as? String {
+                                newBox.boxType = boxType
+                            }
+                            if let boxName = box["box_name"] as? String {
+                                newBox.boxName = boxName
+                            }
+                            if let msgCount = box["msg_count"] as? Int {
+                                newBox.msgCount = msgCount
+                            }
+                            weakSelf?.boxes.append(newBox)
+                            weakSelf?.navigationItem.title = "Ящики"
+                            weakSelf?.tableView.reloadData()
+                        })
+                    }
+                }
+            }
         }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        print("messageRoomCount = \(messageRoomCount)")
-        print("boxes = \(boxes)")
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getBoxInfo()
     }
 
     override func didReceiveMemoryWarning() {
