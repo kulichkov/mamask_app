@@ -17,9 +17,13 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var name: UITextField!
     @IBOutlet weak var password: UITextField!
     @IBAction func login(_ sender: UIButton) {
-        //DispatchQueue.global(qos: DispatchQoS.QoSClass.userInitiated).async {
-            self.tapatalk.login(login_name: self.name.text!, password: self.password.text!) { self.loginResults = $0 }
-        //}
+        DispatchQueue.global(qos: DispatchQoS.QoSClass.userInitiated).async {
+            print("starting self.tapatalk.login...")
+            self.tapatalk.login(login_name: self.name.text!, password: self.password.text!) { loginResult in
+                print("Executing handler... loginResults = \(loginResult)")
+                DispatchQueue.main.async { self.loginResults = loginResult }
+                print("End of handler...") }
+        }
     }
 
     let tapatalk = TapatalkAPI(url: Constants.mobiquoURL)
@@ -27,6 +31,7 @@ class LoginViewController: UIViewController {
         didSet {
             if let loginResult = loginResults["result"] as? Bool {
                 if loginResult {
+                    print("Starting performSegue...")
                     performSegue(withIdentifier: Constants.showBoxesIdentifier, sender: self)
                 } else {
                     //TODO: Обработка ошибок аутентификации login()
@@ -55,35 +60,8 @@ class LoginViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let segueIdentifier = segue.identifier {
             if segueIdentifier == Constants.showBoxesIdentifier {
-                if let btvc = segue.destination as? BoxesTableViewController {
-                    //DispatchQueue.global(qos: DispatchQoS.QoSClass.userInitiated).async {
-                    self.tapatalk.get_box_info() {
-                        if let messageRoomCount = $0["message_room_count"] as? Int {
-                            btvc.messageRoomCount = messageRoomCount
-                        }
-                        if let boxes = $0["list"] as? [[String: Any?]] {
-                            boxes.forEach({ (box) in
-                                var newBox = Box()
-                                if let unreadCount = box["unread_count"] as? Int {
-                                    newBox.unreadCount = unreadCount
-                                }
-                                if let boxID = box["box_id"] as? String {
-                                    newBox.boxID = boxID
-                                }
-                                if let boxType = box["box_type"] as? String {
-                                    newBox.boxType = boxType
-                                }
-                                if let boxName = box["box_name"] as? String {
-                                    newBox.boxName = boxName
-                                }
-                                if let msgCount = box["msg_count"] as? Int {
-                                    newBox.msgCount = msgCount
-                                }
-                                btvc.boxes.append(newBox)
-                            })
-                        }
-                    //}
-                    }
+                if let btvc = segue.destination.contentViewController as? BoxesTableViewController {
+                    btvc.tapatalk = tapatalk
                 }
             }
         }
@@ -91,4 +69,14 @@ class LoginViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
 
+}
+
+extension UIViewController {
+    var contentViewController: UIViewController {
+        if let navcon = self as? UINavigationController {
+            return navcon.visibleViewController ?? self
+        } else {
+            return self
+        }
+    }
 }
