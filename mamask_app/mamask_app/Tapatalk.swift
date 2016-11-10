@@ -132,13 +132,15 @@ class TapatalkAPI {
         return sendURLRequestWithMethod("login", andParameters: [utf8EncodeFromString(login_name)!, utf8EncodeFromString(password)!], andHandler: handler)
     }
 
+    func logout_user(handler: @escaping tptlkHandler) {
+        return sendURLRequestWithMethod("logout_user", andParameters: nil, andHandler: handler)
+    }
+
     /*
      USER SECTION
      
      avatar.php
-
      get_inbox_stat
-     logout_user
      get_online_users
      get_user_info
      get_user_topic
