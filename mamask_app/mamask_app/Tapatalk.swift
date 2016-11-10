@@ -55,7 +55,7 @@ class TapatalkAPI {
             } else if let _ = response, let decoder = WPXMLRPCDecoder(data: data) {
                 //FIXME: Разобраться с response: нужен он нам или нет
                 if !decoder.isFault() {
-                    //print("RESPONSE:\n\(response)")
+                    print("RESPONSE:\n\(response)\nEND_RESPONSE")
                     //print("RAW_DATA_FROM_SERVER:\n\(decoder.object())\nEND DATA\n")
                     if let theDictionary = decoder.object() as? [String: Any] {
                         handler(self.utf8Decode(theDictionary) as! [String: Any])
