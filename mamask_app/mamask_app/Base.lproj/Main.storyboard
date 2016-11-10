@@ -75,16 +75,17 @@
                     <connections>
                         <outlet property="name" destination="doS-cH-LEf" id="Yz6-8J-Evd"/>
                         <outlet property="password" destination="dcB-nX-gfg" id="ITV-DQ-UJg"/>
+                        <segue destination="a0U-xF-vSd" kind="show" identifier="Show Boxes" id="N6K-SU-oqp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="136.80000000000001" y="138.0809595202399"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Boxes Table View Controller-->
         <scene sceneID="4yG-kN-bRV">
             <objects>
-                <tableViewController id="a0U-xF-vSd" sceneMemberID="viewController">
+                <tableViewController id="a0U-xF-vSd" customClass="BoxesTableViewController" customModule="mamask_app" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="EV2-0v-eSi">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

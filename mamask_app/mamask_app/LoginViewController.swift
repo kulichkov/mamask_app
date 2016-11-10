@@ -8,13 +8,17 @@
 
 import UIKit
 
+struct Constants {
+    static let mobiquoURL = URL(string: "http://mama26.ru/testapp/mobiquo/mobiquo.php")!
+    static let showBoxesIdentifier = "Show Boxes"
+}
+
 class LoginViewController: UIViewController {
-    let mobiquoURL = URL(string: "http://mama26.ru/testapp/mobiquo/mobiquo.php")!
     @IBOutlet weak var name: UITextField!
     @IBOutlet weak var password: UITextField!
 
     @IBAction func login(_ sender: UIButton) {
-        let tapatalk = TapatalkAPI(url: mobiquoURL)
+        let tapatalk = TapatalkAPI(url: Constants.mobiquoURL)
         tapatalk.login(login_name: name.text!, password: password.text!) { print($0) }
         tapatalk.get_box_info() { print($0) }
     }
