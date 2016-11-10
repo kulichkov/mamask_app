@@ -23,17 +23,21 @@ class TapatalkAPI {
 
     private func utf8Decode(_ value: Any) -> Any {
         if let data = value as? Data {
+            //print("trying to decode Data {\(value)}...")
             if let newValue = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as? String {
                 return newValue
             }
         } else if var dictionary = value as? [String: Any] {
+            //print("trying to decode Dictionary {\(dictionary)}...")
             dictionary.forEach({ (key, valueForKey) in
                 dictionary.updateValue(utf8Decode(valueForKey), forKey: key)
             })
             return dictionary
         } else if let array = value as? [Any] {
+            //print("trying to decode Array {\(array)}...")
             return array.map { utf8Decode($0) }
         }
+        //print("trying return Value {\(value)} as is...")
         return value
     }
 
@@ -56,9 +60,10 @@ class TapatalkAPI {
                 //TODO: Разобраться с response: нужен он нам или нет
                 if !decoder.isFault() {
                     print("RESPONSE:\n\(response)\nEND_RESPONSE")
-                    //print("RAW_DATA_FROM_SERVER:\n\(decoder.object())\nEND DATA\n")
+                    print("RAW_DATA_FROM_SERVER:\n\(decoder.object())\nEND DATA\n")
                     if let theDictionary = decoder.object() as? [String: Any] {
                         handler(self.utf8Decode(theDictionary) as! [String: Any])
+                        print("Decoded successfully...")
                     }
                 } else {
                     print("Response in decoder contains a XML-RPC error")

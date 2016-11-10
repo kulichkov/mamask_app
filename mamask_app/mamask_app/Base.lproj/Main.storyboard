@@ -75,7 +75,7 @@
                     <connections>
                         <outlet property="name" destination="doS-cH-LEf" id="Yz6-8J-Evd"/>
                         <outlet property="password" destination="dcB-nX-gfg" id="ITV-DQ-UJg"/>
-                        <segue destination="a0U-xF-vSd" kind="show" identifier="Show Boxes" id="N6K-SU-oqp"/>
+                        <segue destination="1HM-1V-Ykl" kind="show" identifier="Show Boxes" id="N6K-SU-oqp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -121,10 +121,29 @@
                             <outlet property="delegate" destination="a0U-xF-vSd" id="ReQ-Ww-R92"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="rIE-lb-Mu8"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jgY-to-uCt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="952" y="139"/>
+            <point key="canvasLocation" x="1890.4000000000001" y="138.98050974512745"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="UPB-Qz-d2I">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="1HM-1V-Ykl" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="RjX-Oo-NXd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="a0U-xF-vSd" kind="relationship" relationship="rootViewController" id="9sw-0I-6DY"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8E8-UH-IDr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="951.20000000000005" y="138.98050974512745"/>
         </scene>
     </scenes>
 </document>
