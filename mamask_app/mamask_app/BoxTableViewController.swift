@@ -11,6 +11,7 @@ import UIKit
 fileprivate struct Constants {
     static let boxCellReuseIdentifier = "Message Cell"
     static let sentBoxID = "sent"
+    static let showMessageIdentifier = "Show Message"
 }
 
 
