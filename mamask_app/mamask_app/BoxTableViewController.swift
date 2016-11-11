@@ -10,10 +10,12 @@ import UIKit
 
 fileprivate struct Constants {
     static let boxCellReuseIdentifier = "Message Cell"
+    static let sentBoxID = "sent"
 }
 
 
 class BoxTableViewController: UITableViewController {
+
 
     var tapatalk: TapatalkAPI?
     var boxName = ""
@@ -122,6 +124,7 @@ class BoxTableViewController: UITableViewController {
 
         let message = boxMessages[indexPath.row]
         if let messageCell = cell as? MessageTableViewCell {
+            messageCell.isSentBox = (boxID == Constants.sentBoxID)
             messageCell.message = message
         }
 

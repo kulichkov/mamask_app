@@ -10,6 +10,7 @@ import UIKit
 
 class MessageTableViewCell: UITableViewCell {
 
+    var isSentBox: Bool?
     var message: BoxTableViewController.BoxMessage? {
         didSet {
             updateUI()
@@ -30,7 +31,16 @@ class MessageTableViewCell: UITableViewCell {
 
         //load new information (if any)
         if let message = self.message {
-            sender.text = message.msgFrom
+            if isSentBox! {
+                var recipientsArray = message.msgTo
+                var recipients = "\((recipientsArray.removeFirst()).username)"
+                recipientsArray.forEach({ (recipient) in
+                    recipients.append(", \(recipient.username)")
+                })
+                sender.text = recipients
+            } else {
+                sender.text = message.msgFrom
+            }
             date.text = "\(message.timestamp!) >"
             subject.text = message.msgSubject
             shortMessage.text = message.shortContent
