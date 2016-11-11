@@ -18,6 +18,7 @@ struct Box {
 
 fileprivate struct Constants {
     static let boxCellReuseIdentifier = "Box Cell"
+    static let showBoxIdentifier = "Show Box"
 }
 
 class BoxesTableViewController: UITableViewController {
@@ -34,13 +35,13 @@ class BoxesTableViewController: UITableViewController {
     private func getBoxInfo() {
         DispatchQueue.global(qos: DispatchQoS.QoSClass.userInitiated).async { [weak weakSelf = self] in
             print("Starting tapatalk.get_box_info()...")
-            weakSelf?.tapatalk?.get_box_info() { getBoxResult in
+            weakSelf?.tapatalk?.get_box_info() { getBoxInfoResult in
                 DispatchQueue.main.async {
                     print("Starting handler in get_box_info...")
-                    if let messageRoomCount = getBoxResult["message_room_count"] as? Int {
+                    if let messageRoomCount = getBoxInfoResult["message_room_count"] as? Int {
                         weakSelf?.messageRoomCount = messageRoomCount
                     }
-                    if let boxes = getBoxResult["list"] as? [[String: Any?]] {
+                    if let boxes = getBoxInfoResult["list"] as? [[String: Any?]] {
                         weakSelf?.boxes = [Box]()
                         boxes.forEach({ (box) in
                             var newBox = Box()
@@ -138,14 +139,20 @@ class BoxesTableViewController: UITableViewController {
     }
     */
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if let segueIdentifier = segue.identifier {
+            if segueIdentifier == Constants.showBoxIdentifier {
+                if let btvc = segue.destination.contentViewController as? BoxTableViewController {
+                    btvc.tapatalk = tapatalk
+                    btvc.boxID = (boxes.first?.boxID)!
+                    btvc.boxName = (boxes.first?.boxName)!
+                }
+            }
+        }
     }
-    */
 
 }

@@ -116,7 +116,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="lNc-ky-W15" kind="show" id="s0t-Nu-4Bb"/>
+                                    <segue destination="lNc-ky-W15" kind="show" identifier="Show Box" id="s0t-Nu-4Bb"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -131,16 +131,16 @@
             </objects>
             <point key="canvasLocation" x="1890.4000000000001" y="138.98050974512745"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Box Table View Controller-->
         <scene sceneID="Waf-7E-n3M">
             <objects>
-                <tableViewController id="lNc-ky-W15" sceneMemberID="viewController">
+                <tableViewController id="lNc-ky-W15" customClass="BoxTableViewController" customModule="mamask_app" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="113" sectionHeaderHeight="28" sectionFooterHeight="28" id="9KH-sy-C8X">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Message Cell" rowHeight="113" id="EDP-mo-K3l">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Message Cell" rowHeight="113" id="EDP-mo-K3l" customClass="MessageTableViewCell" customModule="mamask_app" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="113"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EDP-mo-K3l" id="Woy-aD-NSf">
@@ -173,7 +173,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Тест сообщения" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="82X-TH-1t0">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Тест сообщения" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="82X-TH-1t0">
                                                     <rect key="frame" x="0.0" y="41" width="359" height="55.5"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                     <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -189,6 +189,12 @@
                                         <constraint firstAttribute="bottomMargin" secondItem="rwg-Bb-hYd" secondAttribute="bottom" id="Vdi-75-HQv"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="date" destination="hEs-pP-4Kt" id="8wI-Gu-l10"/>
+                                    <outlet property="sender" destination="i6r-Wn-2FG" id="xwd-YW-gnz"/>
+                                    <outlet property="shortMessage" destination="82X-TH-1t0" id="YOc-Cd-woz"/>
+                                    <outlet property="subject" destination="cb2-vY-s4X" id="pS9-bn-nFF"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
