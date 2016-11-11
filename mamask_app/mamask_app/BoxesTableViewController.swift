@@ -146,10 +146,11 @@ class BoxesTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let segueIdentifier = segue.identifier {
             if segueIdentifier == Constants.showBoxIdentifier {
-                if let btvc = segue.destination.contentViewController as? BoxTableViewController {
+                if let btvc = segue.destination.contentViewController as? BoxTableViewController, let selectedBox = sender as? UITableViewCell {
+                    let indexOfSelected = (tableView.indexPath(for: selectedBox)?.row)!
                     btvc.tapatalk = tapatalk
-                    btvc.boxID = (boxes.first?.boxID)!
-                    btvc.boxName = (boxes.first?.boxName)!
+                    btvc.boxName = boxes[indexOfSelected].boxName
+                    btvc.boxID = boxes[indexOfSelected].boxID
                 }
             }
         }

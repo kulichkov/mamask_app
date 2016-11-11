@@ -33,7 +33,7 @@ class BoxTableViewController: UITableViewController {
 
     struct BoxMessage {
         let msgID: String
-        let msgState: Int
+        let msgState: Int //1 = Unread, 2 = Read;, 3 = Replied;, 4 = Forwarded;
         let timestamp: String?
         let sentDate: Date?
         let msgFromID: String
