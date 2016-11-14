@@ -11,7 +11,7 @@ import UIKit
 fileprivate struct Constants {
     static let boxCellReuseIdentifier = "Message Cell"
     static let sentBoxID = "sent"
-    static let showMessageIdentifier = "Show Message"
+    static let showFullMessageIdentifier = "Show Full Message"
 }
 
 
@@ -168,14 +168,19 @@ class BoxTableViewController: UITableViewController {
     }
     */
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if let segueIdentifier = segue.identifier {
+            if segueIdentifier == Constants.showFullMessageIdentifier {
+                if let fmtvc = segue.destination.contentViewController as? FullMessageTableViewController, let selectedBox = sender as? MessageTableViewCell {
+                    let indexOfSelected = (tableView.indexPath(for: selectedBox)?.row)!
+                    fmtvc.boxID = self.boxID
+                    fmtvc.messageID = boxMessages[indexOfSelected].msgID
+                    fmtvc.tapatalk = tapatalk
+                }
+            }
+        }
     }
-    */
-
 }

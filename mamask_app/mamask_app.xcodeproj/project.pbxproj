@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4596A8DF2EF7B4A21FD8B260 /* Pods_mamask_app.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCBE0CCDE9BB55034E68B4D /* Pods_mamask_app.framework */; };
+		691769F61DDA1F6100BBDB53 /* ComposeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691769F51DDA1F6100BBDB53 /* ComposeTableViewController.swift */; };
 		6939F92B1DCBC92A00B20914 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6939F92A1DCBC92A00B20914 /* AppDelegate.swift */; };
 		6939F9301DCBC92A00B20914 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6939F92E1DCBC92A00B20914 /* Main.storyboard */; };
 		6939F9321DCBC92A00B20914 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6939F9311DCBC92A00B20914 /* Assets.xcassets */; };
@@ -17,10 +18,12 @@
 		69C19A0B1DD47C030030D8C0 /* BoxesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C19A0A1DD47C030030D8C0 /* BoxesTableViewController.swift */; };
 		69C19A0D1DD519C20030D8C0 /* BoxTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C19A0C1DD519C20030D8C0 /* BoxTableViewController.swift */; };
 		69C19A0F1DD5FB870030D8C0 /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C19A0E1DD5FB870030D8C0 /* MessageTableViewCell.swift */; };
+		69C19A111DD65DB30030D8C0 /* FullMessageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C19A101DD65DB30030D8C0 /* FullMessageTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		09C95BE8F22610A1AF918D6A /* Pods-mamask_app.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mamask_app.release.xcconfig"; path = "Pods/Target Support Files/Pods-mamask_app/Pods-mamask_app.release.xcconfig"; sourceTree = "<group>"; };
+		691769F51DDA1F6100BBDB53 /* ComposeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeTableViewController.swift; sourceTree = "<group>"; };
 		6939F9271DCBC92A00B20914 /* mamask_app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mamask_app.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6939F92A1DCBC92A00B20914 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6939F92F1DCBC92A00B20914 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -32,6 +35,7 @@
 		69C19A0A1DD47C030030D8C0 /* BoxesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoxesTableViewController.swift; sourceTree = "<group>"; };
 		69C19A0C1DD519C20030D8C0 /* BoxTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoxTableViewController.swift; sourceTree = "<group>"; };
 		69C19A0E1DD5FB870030D8C0 /* MessageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
+		69C19A101DD65DB30030D8C0 /* FullMessageTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullMessageTableViewController.swift; sourceTree = "<group>"; };
 		7ADDC08116EEE5B45D734D16 /* Pods-mamask_app.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mamask_app.debug.xcconfig"; path = "Pods/Target Support Files/Pods-mamask_app/Pods-mamask_app.debug.xcconfig"; sourceTree = "<group>"; };
 		DDCBE0CCDE9BB55034E68B4D /* Pods_mamask_app.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_mamask_app.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -79,10 +83,12 @@
 			children = (
 				6939F93C1DCBD0BD00B20914 /* Tapatalk.swift */,
 				6939F92E1DCBC92A00B20914 /* Main.storyboard */,
+				691769F51DDA1F6100BBDB53 /* ComposeTableViewController.swift */,
 				69C19A071DD45EC30030D8C0 /* LoginViewController.swift */,
 				69C19A0A1DD47C030030D8C0 /* BoxesTableViewController.swift */,
 				69C19A0C1DD519C20030D8C0 /* BoxTableViewController.swift */,
 				69C19A0E1DD5FB870030D8C0 /* MessageTableViewCell.swift */,
+				69C19A181DD701810030D8C0 /* FullMessage */,
 				69C19A091DD47B540030D8C0 /* Supporting Files */,
 			);
 			path = mamask_app;
@@ -97,6 +103,14 @@
 				6939F9361DCBC92A00B20914 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		69C19A181DD701810030D8C0 /* FullMessage */ = {
+			isa = PBXGroup;
+			children = (
+				69C19A101DD65DB30030D8C0 /* FullMessageTableViewController.swift */,
+			);
+			name = FullMessage;
 			sourceTree = "<group>";
 		};
 		B96D406CA2B01FF0B1670F1A /* Pods */ = {
@@ -232,11 +246,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				691769F61DDA1F6100BBDB53 /* ComposeTableViewController.swift in Sources */,
 				69C19A081DD45EC30030D8C0 /* LoginViewController.swift in Sources */,
 				69C19A0B1DD47C030030D8C0 /* BoxesTableViewController.swift in Sources */,
 				6939F92B1DCBC92A00B20914 /* AppDelegate.swift in Sources */,
 				6939F93D1DCBD0BD00B20914 /* Tapatalk.swift in Sources */,
 				69C19A0D1DD519C20030D8C0 /* BoxTableViewController.swift in Sources */,
+				69C19A111DD65DB30030D8C0 /* FullMessageTableViewController.swift in Sources */,
 				69C19A0F1DD5FB870030D8C0 /* MessageTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

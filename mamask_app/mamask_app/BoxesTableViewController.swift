@@ -19,6 +19,7 @@ struct Box {
 fileprivate struct Constants {
     static let boxCellReuseIdentifier = "Box Cell"
     static let showBoxIdentifier = "Show Box"
+    static let showComposeMessage = "Compose Message"
 }
 
 class BoxesTableViewController: UITableViewController {
@@ -142,7 +143,11 @@ class BoxesTableViewController: UITableViewController {
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    
+
+    @IBAction func goBack(segue: UIStoryboardSegue) {
+        print("Hello again!")
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let segueIdentifier = segue.identifier {
             if segueIdentifier == Constants.showBoxIdentifier {
@@ -151,6 +156,10 @@ class BoxesTableViewController: UITableViewController {
                     btvc.tapatalk = tapatalk
                     btvc.boxName = boxes[indexOfSelected].boxName
                     btvc.boxID = boxes[indexOfSelected].boxID
+                }
+            } else if segueIdentifier == Constants.showComposeMessage {
+                if let ctvc = segue.destination.contentViewController as? ComposeTableViewController {
+                    ctvc.tapatalk = tapatalk
                 }
             }
         }
