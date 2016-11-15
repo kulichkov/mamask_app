@@ -11,7 +11,7 @@ import wpxmlrpc
 
 class TapatalkAPI {
     //MARK: - Variables and utilities
-    typealias tptlkHandler = ([String: Any]) -> Void
+    typealias tptlkHandler = (_ tptlkData: [String: Any], _ tptlkResponse: [String: Any]) -> Void
     var mobiquoURL: URL?
 
     init(url: URL) {
@@ -56,15 +56,21 @@ class TapatalkAPI {
         sessionWithoutADelegate.dataTask(with: request, completionHandler: { (data, response, error) in
             if let error = error {
                 print("Error in sessionWithoutADelegate.dataTask: \(error)")
-            } else if let _ = response, let decoder = WPXMLRPCDecoder(data: data) {
+            } else if let httpResponse = response, let decoder = WPXMLRPCDecoder(data: data) {
                 //TODO: Разобраться с response: нужен он нам или нет
                 if !decoder.isFault() {
-                    print("RESPONSE:\n\(response)\nEND_RESPONSE")
-                    print("RAW_DATA_FROM_SERVER:\n\(decoder.object())\nEND DATA\n")
-                    if let theDictionary = decoder.object() as? [String: Any] {
-                        handler(self.utf8Decode(theDictionary) as! [String: Any])
-                        print("Decoded successfully...")
-                    }
+                    if let httpURLResponse = httpResponse as? HTTPURLResponse {
+                        var responseDict = [String: Any]()
+                        httpURLResponse.allHeaderFields.forEach({ (key, value) in
+                            responseDict.updateValue(value, forKey: String(describing: key))
+                        })
+                        print("RESPONSE:\n\(response)\nEND_RESPONSE")
+                        print("RAW_DATA_FROM_SERVER:\n\(decoder.object())\nEND DATA\n")
+                        if let theDictionary = decoder.object() as? [String: Any] {
+                            handler(self.utf8Decode(theDictionary) as! [String: Any], self.utf8Decode(responseDict) as! [String: Any])
+                            print("Decoded successfully...")
+                        }                    }
+
                 } else {
                     print("Response in decoder contains a XML-RPC error")
                 }
