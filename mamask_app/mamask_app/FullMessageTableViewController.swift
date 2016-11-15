@@ -67,7 +67,7 @@ class FullMessageTableViewController: UITableViewController {
 
     private func getFullMessage() {
         print("Starting tapatalk.get_message()...")
-        tapatalk?.get_message(message_id: messageID, box_id: boxID) { getMessageResult in
+        tapatalk?.get_message(message_id: messageID, box_id: boxID) { (getMessageResult, _) in
             DispatchQueue.main.async { [weak weakSelf = self] in
                 print("Starting handler in get_message...")
                 let msgID = getMessageResult["msg_id"] as? String ?? ""

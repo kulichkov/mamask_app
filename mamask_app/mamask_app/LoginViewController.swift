@@ -19,7 +19,7 @@ class LoginViewController: UIViewController {
     @IBAction func login(_ sender: UIButton) {
         DispatchQueue.global(qos: DispatchQoS.QoSClass.userInitiated).async {
             print("starting self.tapatalk.login...")
-            self.tapatalk.login(login_name: self.name.text!, password: self.password.text!) { loginResult in
+            self.tapatalk.login(login_name: self.name.text!, password: self.password.text!) { (loginResult, _) in
                 print("Executing handler... loginResults = \(loginResult)")
                 DispatchQueue.main.async { self.loginResults = loginResult }
                 print("End of handler...") }

@@ -36,7 +36,7 @@ class BoxesTableViewController: UITableViewController {
     private func getBoxInfo() {
         DispatchQueue.global(qos: DispatchQoS.QoSClass.userInitiated).async { [weak weakSelf = self] in
             print("Starting tapatalk.get_box_info()...")
-            weakSelf?.tapatalk?.get_box_info() { getBoxInfoResult in
+            weakSelf?.tapatalk?.get_box_info() { (getBoxInfoResult, _) in
                 DispatchQueue.main.async {
                     print("Starting handler in get_box_info...")
                     if let messageRoomCount = getBoxInfoResult["message_room_count"] as? Int {

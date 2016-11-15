@@ -51,7 +51,7 @@ class BoxTableViewController: UITableViewController {
     private func getBox() {
         DispatchQueue.global(qos: DispatchQoS.QoSClass.userInitiated).async { [weak weakSelf = self] in
             print("Starting tapatalk.get_box()...")
-            weakSelf?.tapatalk?.get_box(box_id: weakSelf?.boxID ?? "", start_num: nil, end_num: nil) { getBoxResult in
+            weakSelf?.tapatalk?.get_box(box_id: weakSelf?.boxID ?? "", start_num: nil, end_num: nil) { (getBoxResult, _) in
                 DispatchQueue.main.async {
                     print("Starting handler in get_box...")
                     weakSelf?.totalMessageCount = (getBoxResult["total_message_count"] as? Int) ?? 0
