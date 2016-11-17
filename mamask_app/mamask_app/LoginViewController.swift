@@ -11,9 +11,11 @@ import UIKit
 fileprivate struct Constants {
     static let mobiquoURL = URL(string: "http://mama26.ru/testapp/mobiquo/mobiquo.php")!
     static let showBoxesIdentifier = "Show Boxes"
+    static let topConstraintDefaultValue = 90.0
 }
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
+    @IBOutlet weak var topConstraint: NSLayoutConstraint!
     @IBOutlet weak var name: UITextField!
     @IBOutlet weak var password: UITextField!
     @IBAction func login(_ sender: UIButton) {
@@ -42,17 +44,71 @@ class LoginViewController: UIViewController {
         }
     }
 
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        view.endEditing(true)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        //tapatalk.logout_user(){ print("User logged out\n\($0)") }
         // Do any additional setup after loading the view.
+    }
+
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        topConstraint.constant = view.frame.height/3
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(notification:)), name: Notification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(notification:)), name: Notification.Name.UIKeyboardWillHide, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
+    func keyboardWillShow(notification: NSNotification) {
+        if let keyboardRect = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            let currentTextField = (name.isFirstResponder ? name : password)!
+            print("topConstraint.constant = \(topConstraint.constant)")
+
+            let userYPoint = currentTextField.convert(currentTextField.frame.origin, to: view).y + currentTextField.frame.size.height
+            let keyboardYPoint = view.frame.height - keyboardRect.height
+            let viewOffset = userYPoint - keyboardYPoint
+            //TODO: Сравнить пересечение кнопки Login и клавиатуры, уменьшить topConstaint на значение пересечения
+
+            if viewOffset > 0 {
+                topConstraint.constant = topConstraint.constant - viewOffset + 35.0
+                print("topConstraint.constant = \(topConstraint.constant)")
+            }
+        }
+    }
+
+    func keyboardWillHide(notification: NSNotification) {
+        //topConstraint.constant = CGFloat(Constants.topConstraintDefaultValue)
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == name {
+            password.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
+        }
+        return false
+    }
+
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+
+    }
 
     // MARK: - Navigation
 
