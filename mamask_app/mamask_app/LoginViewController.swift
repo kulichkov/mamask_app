@@ -11,11 +11,15 @@ import UIKit
 fileprivate struct Constants {
     static let mobiquoURL = URL(string: "http://mama26.ru/testapp/mobiquo/mobiquo.php")!
     static let showBoxesIdentifier = "Show Boxes"
-    static let topConstraintDefaultValue = 90.0
 }
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
-    @IBOutlet weak var topConstraint: NSLayoutConstraint!
+
+    var activeField: UIView?
+    var changedY = false
+    var viewOffset: CGFloat = 0
+    var keyboardHeight: CGFloat = 300
+
     @IBOutlet weak var name: UITextField!
     @IBOutlet weak var password: UITextField!
     @IBAction func login(_ sender: UIButton) {
@@ -61,7 +65,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        topConstraint.constant = view.frame.height/3
+        //topConstraint.constant = view.frame.height/3
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -78,23 +82,24 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
     func keyboardWillShow(notification: NSNotification) {
         if let keyboardRect = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            keyboardHeight = keyboardRect.size.height
             let currentTextField = (name.isFirstResponder ? name : password)!
-            print("topConstraint.constant = \(topConstraint.constant)")
-
-            let userYPoint = currentTextField.convert(currentTextField.frame.origin, to: view).y + currentTextField.frame.size.height
-            let keyboardYPoint = view.frame.height - keyboardRect.height
-            let viewOffset = userYPoint - keyboardYPoint
-            //TODO: Сравнить пересечение кнопки Login и клавиатуры, уменьшить topConstaint на значение пересечения
-
-            if viewOffset > 0 {
-                topConstraint.constant = topConstraint.constant - viewOffset + 35.0
-                print("topConstraint.constant = \(topConstraint.constant)")
+            let highestUserY = currentTextField.convert(currentTextField.bounds.origin, to: self.view).y + currentTextField.bounds.height
+            viewOffset = self.view.bounds.height - keyboardHeight - highestUserY - 5.0
+            if viewOffset < 0 {
+                if (!changedY) {
+                    self.view.frame.origin.y += viewOffset
+                }
+                changedY = true
             }
         }
     }
 
     func keyboardWillHide(notification: NSNotification) {
-        //topConstraint.constant = CGFloat(Constants.topConstraintDefaultValue)
+        if changedY {
+            self.view.frame.origin.y -= viewOffset
+        }
+        changedY = false
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -106,9 +111,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return false
     }
 
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-
-    }
+//
+//    func textFieldDidBeginEditing(_ textField: UITextField) {
+//
+//    }
 
     // MARK: - Navigation
 
