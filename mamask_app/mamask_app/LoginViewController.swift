@@ -14,14 +14,11 @@ fileprivate struct Constants {
 }
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
-
-    var activeField: UIView?
     var changedY = false
     var viewOffset: CGFloat = 0
-    var keyboardHeight: CGFloat = 300
-
     @IBOutlet weak var name: UITextField!
     @IBOutlet weak var password: UITextField!
+
     @IBAction func login(_ sender: UIButton) {
         DispatchQueue.global(qos: DispatchQoS.QoSClass.userInitiated).async {
             print("starting self.tapatalk.login...")
@@ -63,14 +60,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         // Do any additional setup after loading the view.
     }
 
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        //topConstraint.constant = view.frame.height/3
-    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(notification:)), name: Notification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(notification:)), name: Notification.Name.UIKeyboardWillHide, object: nil)
     }
@@ -82,7 +74,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
     func keyboardWillShow(notification: NSNotification) {
         if let keyboardRect = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            keyboardHeight = keyboardRect.size.height
+            let keyboardHeight = keyboardRect.size.height
             let currentTextField = (name.isFirstResponder ? name : password)!
             let highestUserY = currentTextField.convert(currentTextField.bounds.origin, to: self.view).y + currentTextField.bounds.height
             viewOffset = self.view.bounds.height - keyboardHeight - highestUserY - 5.0
@@ -111,11 +103,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return false
     }
 
-//
-//    func textFieldDidBeginEditing(_ textField: UITextField) {
-//
-//    }
-
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -128,7 +115,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
-
 }
 
 extension UIViewController {
